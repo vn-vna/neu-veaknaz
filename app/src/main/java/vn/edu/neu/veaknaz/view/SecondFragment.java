@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import vn.edu.neu.veaknaz.R;
+import vn.edu.neu.veaknaz.client.AntChatAPIClient;
+import vn.edu.neu.veaknaz.client.AntNotificationClient;
 import vn.edu.neu.veaknaz.databinding.FragmentSecondBinding;
 
 public class SecondFragment extends Fragment {
