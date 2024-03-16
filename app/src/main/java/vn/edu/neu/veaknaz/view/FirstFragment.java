@@ -1,14 +1,16 @@
 package vn.edu.neu.veaknaz.view;
 
-import android.os.*;
-import android.view.*;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.annotation.*;
-import androidx.fragment.app.*;
-import androidx.navigation.fragment.*;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import vn.edu.neu.veaknaz.R;
-import vn.edu.neu.veaknaz.databinding.*;
+import vn.edu.neu.veaknaz.databinding.FragmentFirstBinding;
 
 public class FirstFragment extends Fragment {
 
@@ -40,6 +42,7 @@ public class FirstFragment extends Fragment {
     super.onDestroyView();
     binding = null;
   }
+
   private FragmentFirstBinding binding;
 
 }

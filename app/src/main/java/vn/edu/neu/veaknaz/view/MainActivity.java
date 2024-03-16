@@ -1,16 +1,20 @@
 package vn.edu.neu.veaknaz.view;
 
-import android.os.*;
-import android.view.*;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
-import androidx.appcompat.app.*;
-import androidx.navigation.*;
-import androidx.navigation.ui.*;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.snackbar.*;
+import com.google.android.material.snackbar.Snackbar;
 
 import vn.edu.neu.veaknaz.R;
-import vn.edu.neu.veaknaz.databinding.*;
+import vn.edu.neu.veaknaz.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     return NavigationUI.navigateUp(navController, appBarConfiguration)
         || super.onSupportNavigateUp();
   }
+
   private AppBarConfiguration appBarConfiguration;
   private ActivityMainBinding binding;
 }
