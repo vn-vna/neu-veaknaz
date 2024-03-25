@@ -1,4 +1,4 @@
-package vn.edu.neu.veaknaz;
+package vn.edu.neu.veaknaz.view;
 
 public class BaseMessage {
     private String messageText;

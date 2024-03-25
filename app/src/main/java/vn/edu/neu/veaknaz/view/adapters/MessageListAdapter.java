@@ -1,4 +1,4 @@
-package vn.edu.neu.veaknaz;
+package vn.edu.neu.veaknaz.view.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import vn.edu.neu.veaknaz.R;
+import vn.edu.neu.veaknaz.view.BaseMessage;
 
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MessageViewHolder> {
     private List<BaseMessage> messageList;

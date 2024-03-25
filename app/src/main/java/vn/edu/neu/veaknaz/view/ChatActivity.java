@@ -1,4 +1,4 @@
-package vn.edu.neu.veaknaz;
+package vn.edu.neu.veaknaz.view;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import vn.edu.neu.veaknaz.view.adapters.MessageListAdapter;
+import vn.edu.neu.veaknaz.R;
 
 public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
