@@ -4,7 +4,9 @@
         <item name="windowSplashScreenBackground">@android:color/background_dark</item>
     </style>
 
-    <style name="Theme.Veaknaz.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/black</item>
+    <style name="Theme.Veaknaz.MainActivity.Header" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:color">@color/alternative</item>
     </style>
 </resources>

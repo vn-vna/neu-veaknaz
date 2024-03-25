@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import vn.edu.neu.veaknaz.R;
 
-public class NavigationFragment extends Fragment {
+public class UserCenterFragment extends Fragment {
 
-  public NavigationFragment() { }
+  public UserCenterFragment() { }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,6 @@ public class NavigationFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_navigation, container, false);
+    return inflater.inflate(R.layout.fragment_user_center, container, false);
   }
 }

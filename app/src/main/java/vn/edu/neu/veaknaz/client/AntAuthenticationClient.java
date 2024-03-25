@@ -1,9 +1,12 @@
 package vn.edu.neu.veaknaz.client;
 
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
+
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
@@ -34,7 +37,7 @@ public class AntAuthenticationClient {
         .build();
 
     repository = retrofit.create(AntAuthenticationRepository.class);
-    executor = Executors.newCachedThreadPool();
+    executor = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
     userToken = new SavedConfiguration<>("veaknaz.auth", "user_token");
   }
 
@@ -50,7 +53,7 @@ public class AntAuthenticationClient {
     return _instance;
   }
 
-  public Future<String> signUp(String username, String password) {
+  public ListenableFuture<String> signUp(String username, String password) {
     return executor.submit(() -> {
       try {
         var result = repository.signUp(
@@ -68,7 +71,7 @@ public class AntAuthenticationClient {
     });
   }
 
-  public Future<String> signIn(String username, String password) {
+  public ListenableFuture<String> signIn(String username, String password) {
     return executor.submit(() -> {
       try {
         var result = repository.signIn(
@@ -94,7 +97,7 @@ public class AntAuthenticationClient {
 
   private static AntAuthenticationClient _instance;
   private final AntAuthenticationRepository repository;
-  private final ExecutorService executor;
+  private final ListeningExecutorService executor;
   private final SavedConfiguration<String> userToken;
 
   public interface AntAuthenticationRepository {

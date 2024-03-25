@@ -16,7 +16,7 @@ public class WelcomeActivity extends AppCompatActivity {
     setContentView(R.layout.activity_welcome);
     this.<ImageView>findViewById(R.id.welcome_button_go_next)
         .setOnClickListener(e -> {
-          Intent intent = new Intent(this, MainActivity.class);
+          Intent intent = new Intent(this, AuthenticationActivity.class);
           startActivity(intent);
         });
   }
