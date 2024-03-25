@@ -15,6 +15,10 @@ public class StateController<StateType extends Enum<StateType>> {
     handler.handle(prev, currentState.get());
   }
 
+  public void setHandler(StateChangeCallback<StateType> handler) {
+    this.handler = handler;
+  }
+
   private final AtomicReference<StateType> currentState;
   private StateChangeCallback<StateType> handler;
 }

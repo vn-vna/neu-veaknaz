@@ -6,12 +6,10 @@ import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.function.Consumer;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.http.Body;
@@ -24,19 +22,20 @@ import vn.edu.neu.veaknaz.client.model.ApiResponse;
 import vn.edu.neu.veaknaz.client.model.auth.ActionSignInResult;
 import vn.edu.neu.veaknaz.client.model.auth.ActionSignUpResult;
 import vn.edu.neu.veaknaz.client.model.auth.UserIdViewResult;
+import vn.edu.neu.veaknaz.util.SavedConfiguration;
 
 public class AntAuthenticationClient {
 
   private AntAuthenticationClient() {
-    String baseUrl = VeaknazApplication.getInstance().getBaseContext().getString(R.string.ant_base_url) + "api/auth/";
-
-    Retrofit retrofit = new Retrofit.Builder()
+    var baseUrl = VeaknazApplication.getInstance().getBaseContext().getString(R.string.ant_base_url) + "api/auth/";
+    var retrofit = new Retrofit.Builder()
         .addConverterFactory(JacksonConverterFactory.create())
         .baseUrl(baseUrl)
         .build();
 
     repository = retrofit.create(AntAuthenticationRepository.class);
     executor = Executors.newCachedThreadPool();
+    userToken = new SavedConfiguration<>("veaknaz.auth", "user_token");
   }
 
   public static AntAuthenticationClient getInstance() {
@@ -54,7 +53,7 @@ public class AntAuthenticationClient {
   public Future<String> signUp(String username, String password) {
     return executor.submit(() -> {
       try {
-        Response<ApiResponse<ActionSignUpResult>> result = repository.signUp(
+        var result = repository.signUp(
             new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("username", username)
@@ -69,10 +68,10 @@ public class AntAuthenticationClient {
     });
   }
 
-  public Future<String> signIn(String username, String password, Consumer<String> successCallback, Consumer<Throwable> errorCallback) {
+  public Future<String> signIn(String username, String password) {
     return executor.submit(() -> {
       try {
-        Response<ApiResponse<ActionSignInResult>> result = repository.signIn(
+        var result = repository.signIn(
             new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("username", username)
@@ -80,7 +79,9 @@ public class AntAuthenticationClient {
                 .build()
         ).execute();
 
-        return Objects.requireNonNull(result.body()).getResult().getTokenId();
+        var token = Objects.requireNonNull(result.body()).getResult().getTokenId();
+        userToken.save(token);
+        return token;
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -88,13 +89,13 @@ public class AntAuthenticationClient {
   }
 
   public Optional<String> getUserToken() {
-    return userToken;
+    return userToken.getValue();
   }
 
   private static AntAuthenticationClient _instance;
   private final AntAuthenticationRepository repository;
   private final ExecutorService executor;
-  private Optional<String> userToken;
+  private final SavedConfiguration<String> userToken;
 
   public interface AntAuthenticationRepository {
     @POST("sign-in")
