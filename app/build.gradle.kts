@@ -54,6 +54,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.17.0")
     implementation("com.squareup.retrofit2:retrofit:2.10.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.10.0")
+    implementation("com.google.guava:guava:33.1.0-android")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
