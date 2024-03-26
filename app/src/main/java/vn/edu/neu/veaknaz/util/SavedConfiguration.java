@@ -42,6 +42,12 @@ public class SavedConfiguration<T> {
     return Optional.empty();
   }
 
+  public void clear() {
+    SharedPreferences.Editor editor = preferences.edit();
+    editor.remove(key);
+    editor.apply();
+  }
+
   private final Context baseContext;
   private final SharedPreferences preferences;
   private final String key;

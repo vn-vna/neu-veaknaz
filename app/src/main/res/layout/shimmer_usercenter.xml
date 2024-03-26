@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.supercharge.shimmerlayout.ShimmerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.UserCenterFragment">
-
-    <include
-            android:id="@+id/usercenter_shimmer_layout"
-            layout="@layout/shimmer_usercenter" />
+        android:visibility="visible"
+        app:shimmer_auto_start="true"
+        app:shimmer_color="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:id="@+id/usercenter_main_layout">
+            android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
@@ -32,28 +27,37 @@
                     android:src="@drawable/ic_usercenter_avatar_placeholder"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:id="@+id/usercenter_avatar_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/shimmer_usercenter_avatar"
+                    app:layout_constraintBottom_toTopOf="@+id/shimmer_usercenter_displayname" />
 
             <TextView
-                    android:text="Display Name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/usercenter_displayname"
-                    app:layout_constraintTop_toBottomOf="@+id/usercenter_avatar_view"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/shimmer_usercenter_displayname"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintTop_toBottomOf="@+id/shimmer_usercenter_avatar"
+                    android:layout_marginBottom="1dp"
+                    app:layout_constraintBottom_toTopOf="@+id/shimmer_usercenter_username"
+                    android:background="@color/background_dimmed" />
 
             <TextView
-                    android:text="Username"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/usercenter_username"
-                    app:layout_constraintTop_toBottomOf="@+id/usercenter_displayname"
+                    android:id="@+id/shimmer_usercenter_username"
+                    app:layout_constraintTop_toBottomOf="@+id/shimmer_usercenter_displayname"
+                    android:layout_marginEnd="173dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:layout_marginStart="172dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="@color/background_dimmed" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+</io.supercharge.shimmerlayout.ShimmerLayout>

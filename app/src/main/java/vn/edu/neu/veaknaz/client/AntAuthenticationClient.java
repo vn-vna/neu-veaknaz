@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -53,8 +52,8 @@ public class AntAuthenticationClient {
     return _instance;
   }
 
-  public ListenableFuture<String> signUp(String username, String password) {
-    return executor.submit(() -> {
+  public void signUp(String username, String password, SignUpEventListener listener) {
+    executor.execute(() -> {
       try {
         var result = repository.signUp(
             new MultipartBody.Builder()
@@ -64,15 +63,16 @@ public class AntAuthenticationClient {
                 .build()
         ).execute();
 
-        return Objects.requireNonNull(result.body()).getResult().getUserId();
+        var userid = Objects.requireNonNull(result.body()).getResult().getUserId();
+        listener.onSignUpSuccess();
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        listener.onSignUpFailed();
       }
     });
   }
 
-  public ListenableFuture<String> signIn(String username, String password) {
-    return executor.submit(() -> {
+  public void login(String username, String password, LoginEventListener listener) {
+    executor.execute(() -> {
       try {
         var result = repository.signIn(
             new MultipartBody.Builder()
@@ -84,10 +84,34 @@ public class AntAuthenticationClient {
 
         var token = Objects.requireNonNull(result.body()).getResult().getTokenId();
         userToken.save(token);
-        return token;
+        listener.onLoginSuccess();
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        listener.onLoginFailed();
       }
+    });
+  }
+
+  public void verifyToken(VerifyTokenListener listener) {
+    executor.execute(() -> {
+      try {
+        var token = userToken.getValue().orElseThrow(() -> new RuntimeException("No token found"));
+        var result = repository.getUid(token).execute();
+
+        if (result.isSuccessful()) {
+          listener.onVerifySuccess();
+        } else {
+          throw new RuntimeException("Invalid token");
+        }
+      } catch (Exception e) {
+        listener.onVerifyFailed();
+      }
+    });
+  }
+
+  public void signOut(SignOutListener listener) {
+    executor.execute(() -> {
+      userToken.clear();
+      listener.onSignOutSuccess();
     });
   }
 
@@ -100,6 +124,7 @@ public class AntAuthenticationClient {
   private final ListeningExecutorService executor;
   private final SavedConfiguration<String> userToken;
 
+
   public interface AntAuthenticationRepository {
     @POST("sign-in")
     Call<ApiResponse<ActionSignInResult>> signIn(@Body RequestBody body);
@@ -109,5 +134,28 @@ public class AntAuthenticationClient {
 
     @GET("uid")
     Call<ApiResponse<UserIdViewResult>> getUid(@Header("USER_TOKEN") String token);
+  }
+
+  public interface LoginEventListener {
+    void onLoginSuccess();
+
+    void onLoginFailed();
+  }
+
+  public interface SignUpEventListener {
+    void onSignUpSuccess();
+
+    void onSignUpFailed();
+  }
+
+  public interface VerifyTokenListener {
+    void onVerifySuccess();
+
+    void onVerifyFailed();
+  }
+
+  @FunctionalInterface
+  public interface SignOutListener {
+    void onSignOutSuccess();
   }
 }

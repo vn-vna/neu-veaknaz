@@ -1,5 +1,3 @@
-import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
-
 plugins {
     id("com.android.application")
 }
@@ -55,6 +53,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.10.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.10.0")
     implementation("com.google.guava:guava:33.1.0-android")
+    implementation("io.supercharge:shimmerlayout:2.1.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

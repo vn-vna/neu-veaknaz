@@ -7,15 +7,26 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.Optional;
+
+import io.supercharge.shimmerlayout.ShimmerLayout;
 import vn.edu.neu.veaknaz.R;
 
 public class UserCenterFragment extends Fragment {
 
-  public UserCenterFragment() { }
+  public UserCenterFragment() {
+  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    Optional.of(requireView().<ShimmerLayout>findViewById(R.id.usercenter_shimmer_layout))
+        .ifPresent(ShimmerLayout::startShimmerAnimation);
   }
 
   @Override
