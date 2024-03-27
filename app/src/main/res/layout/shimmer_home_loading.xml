@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/home_fragment_loading_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            app:shimmer_color="#ffffff"
+            android:layout_marginEnd="275dp"
+            app:shimmer_auto_start="true">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            app:shimmer_color="#ffffff"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:shimmer_auto_start="true">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/background_dimmed"
+            app:shimmer_color="#ffffff"
+            app:shimmer_auto_start="true"
+            android:layout_marginTop="16dp">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/background_dimmed"
+            app:shimmer_color="#ffffff"
+            app:shimmer_auto_start="true"
+            android:layout_marginTop="16dp">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/background_dimmed"
+            app:shimmer_color="#ffffff"
+            app:shimmer_auto_start="true"
+            android:layout_marginTop="16dp">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            app:shimmer_color="#ffffff"
+            android:layout_marginEnd="275dp"
+            app:shimmer_auto_start="true">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            app:shimmer_color="#ffffff"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:shimmer_auto_start="true">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            app:shimmer_color="#ffffff"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:shimmer_auto_start="true">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            app:shimmer_color="#ffffff"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:shimmer_auto_start="true">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+    <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            app:shimmer_color="#ffffff"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:shimmer_auto_start="true">
+
+        <FrameLayout
+                android:background="@color/background_dimmed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </io.supercharge.shimmerlayout.ShimmerLayout>
+
+</LinearLayout>

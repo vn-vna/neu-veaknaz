@@ -22,8 +22,6 @@ public class LoginFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setExitTransition(TransitionInflater.from(requireContext()).inflateTransition(R.transition.slide));
-
   }
 
   @Override

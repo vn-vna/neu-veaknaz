@@ -6,7 +6,7 @@
         android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/background"
+            android:background="@color/primary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".view.WelcomeActivity">
@@ -20,7 +20,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                    android:src="@drawable/logo_ant"
+                    android:src="@drawable/logo_ant_nobg"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:id="@+id/imageView"
@@ -34,6 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView"
+                    android:textColor="@color/background"
                     app:layout_constraintTop_toBottomOf="@+id/imageView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +45,7 @@
                     android:textStyle="bold" />
 
             <TextView
+                    android:textColor="@color/background"
                     android:text="@string/welcome_slogan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -59,7 +61,7 @@
                     android:layout_height="40dp"
                     app:srcCompat="@drawable/ic_welcome_go_next"
                     android:id="@+id/welcome_button_go_next"
-                    app:tint="@color/text_color"
+                    app:tint="@color/background"
                     app:layout_constraintTop_toBottomOf="@+id/textView2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
