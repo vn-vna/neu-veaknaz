@@ -1,41 +1,25 @@
 package vn.edu.neu.veaknaz.client;
 
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
-
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.Executors;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import vn.edu.neu.veaknaz.R;
-import vn.edu.neu.veaknaz.application.VeaknazApplication;
 import vn.edu.neu.veaknaz.client.model.ApiResponse;
 import vn.edu.neu.veaknaz.client.model.auth.ActionSignInResult;
 import vn.edu.neu.veaknaz.client.model.auth.ActionSignUpResult;
 import vn.edu.neu.veaknaz.client.model.auth.UserIdViewResult;
 import vn.edu.neu.veaknaz.util.SavedConfiguration;
 
-public class AntAuthenticationClient {
+public class AntAuthenticationClient extends ApiClient<AntAuthenticationClient.AntAuthenticationRepository> {
 
   private AntAuthenticationClient() {
-    var baseUrl = VeaknazApplication.getInstance().getBaseContext().getString(R.string.ant_base_url) + "api/auth/";
-    var retrofit = new Retrofit.Builder()
-        .addConverterFactory(JacksonConverterFactory.create())
-        .baseUrl(baseUrl)
-        .build();
-
-    repository = retrofit.create(AntAuthenticationRepository.class);
-    executor = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
+    super(AntAuthenticationRepository.class);
     userToken = new SavedConfiguration<>("veaknaz.auth", "user_token");
   }
 
@@ -52,9 +36,9 @@ public class AntAuthenticationClient {
   }
 
   public void signUp(String username, String password, SignUpEventListener listener) {
-    executor.execute(() -> {
+    getExecutor().execute(() -> {
       try {
-        var result = repository.signUp(
+        var result = getRepository().signUp(
             new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("username", username)
@@ -63,17 +47,21 @@ public class AntAuthenticationClient {
         ).execute();
 
         var userid = Objects.requireNonNull(result.body()).getResult().getUserId();
+
+        if (userid == null) {
+          throw new RuntimeException("User ID is null");
+        }
         listener.onSignUpSuccess();
-      } catch (IOException e) {
+      } catch (Exception e) {
         listener.onSignUpFailed();
       }
     });
   }
 
   public void login(String username, String password, LoginEventListener listener) {
-    executor.execute(() -> {
+    getExecutor().execute(() -> {
       try {
-        var result = repository.signIn(
+        var result = getRepository().signIn(
             new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("username", username)
@@ -84,17 +72,17 @@ public class AntAuthenticationClient {
         var token = Objects.requireNonNull(result.body()).getResult().getTokenId();
         userToken.save(token);
         listener.onLoginSuccess();
-      } catch (IOException e) {
+      } catch (Exception e) {
         listener.onLoginFailed();
       }
     });
   }
 
   public void verifyToken(VerifyTokenListener listener) {
-    executor.execute(() -> {
+    getExecutor().execute(() -> {
       try {
         var token = userToken.getValue().orElseThrow(() -> new RuntimeException("No token found"));
-        var result = repository.getUid(token).execute();
+        var result = getRepository().getUid(token).execute();
 
         if (result.isSuccessful()) {
           listener.onVerifySuccess();
@@ -108,7 +96,7 @@ public class AntAuthenticationClient {
   }
 
   public void signOut(SignOutListener listener) {
-    executor.execute(() -> {
+    getExecutor().execute(() -> {
       userToken.clear();
       listener.onSignOutSuccess();
     });
@@ -119,19 +107,17 @@ public class AntAuthenticationClient {
   }
 
   private static AntAuthenticationClient _instance;
-  private final AntAuthenticationRepository repository;
-  private final ListeningExecutorService executor;
   private final SavedConfiguration<String> userToken;
 
 
   public interface AntAuthenticationRepository {
-    @POST("sign-in")
+    @POST("/api/auth/sign-in")
     Call<ApiResponse<ActionSignInResult>> signIn(@Body RequestBody body);
 
-    @POST("sign-up")
+    @POST("/api/auth/sign-up")
     Call<ApiResponse<ActionSignUpResult>> signUp(@Body RequestBody body);
 
-    @GET("uid")
+    @GET("/api/auth/uid")
     Call<ApiResponse<UserIdViewResult>> getUid(@Header("USER_TOKEN") String token);
   }
 

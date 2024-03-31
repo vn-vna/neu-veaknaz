@@ -17,4 +17,5 @@
     <string name="fragment_signup_password_hint">パスワード</string>
     <string name="fragment_signup_button_signup">サインアップ</string>
     <string name="fragment_signup_go_to_log_in">ログインに行く</string>
+    <string name="usercenter_displayname_default">匿名</string>
 </resources>

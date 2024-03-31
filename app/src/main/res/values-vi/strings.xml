@@ -17,4 +17,5 @@
     <string name="fragment_signup_password_hint">Mật khẩu</string>
     <string name="fragment_signup_button_signup">Đăng ký</string>
     <string name="fragment_signup_go_to_log_in">Đi tới Đăng Nhập</string>
+    <string name="usercenter_displayname_default">Vô danh</string>
 </resources>
