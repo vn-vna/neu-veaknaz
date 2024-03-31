@@ -1,1 +1,4 @@
-<resources></resources>
+<resources>
+    <string name="preference_main_activity" translatable="false">preference.main_activity</string>
+    <string name="ant_base_url" translatable="false">http://10.0.2.2:5192/</string>
+</resources>

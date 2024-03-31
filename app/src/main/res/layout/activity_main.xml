@@ -79,11 +79,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.navigation.NavigationView
-            android:background="@color/background_light"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-    </com.google.android.material.navigation.NavigationView>
-
 </FrameLayout>

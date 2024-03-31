@@ -11,5 +11,11 @@ public class VeaknazApplication extends Application {
   public static VeaknazApplication getInstance() {
     return instance;
   }
+
+  @Override
+  public void onCreate() {
+    super.onCreate();
+  }
+
   private static VeaknazApplication instance;
 }

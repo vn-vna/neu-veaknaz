@@ -1,11 +1,19 @@
 <resources>
     <item name="app_name" type="string">Veaknaz</item>
 
-    <string name="preference_main_activity">preference.main_activity</string>
     <string name="welcome_text">Welcome to Veaknaz</string>
     <string name="welcome_slogan">(yet another ANT client)</string>
 
-    <string name="ant_base_url">http://10.0.2.2:5192/</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_drawer_navigation_open">Open navigation drawer</string>
+    <string name="main_drawer_navigation_close">Close navigation drawer</string>
+    <string name="fragment_login_title">Login</string>
+    <string name="fragment_login_username_hint">Username</string>
+    <string name="fragment_login_password_hint">Password</string>
+    <string name="fragment_login_button_login">Login</string>
+    <string name="fragment_login_button_go_to_signup">Go to Sign Up</string>
+    <string name="fragment_signup_title">Sign Up</string>
+    <string name="fragment_signup_username_hint">Username</string>
+    <string name="fragment_signup_password_hint">Password</string>
+    <string name="fragment_signup_button_signup">Sign up</string>
+    <string name="fragment_signup_go_to_log_in">Go to Login</string>
 </resources>

@@ -5,17 +5,19 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
 
-import java.util.concurrent.Executors;
+import java.util.Optional;
 
 import vn.edu.neu.veaknaz.R;
 import vn.edu.neu.veaknaz.client.AntAuthenticationClient;
@@ -28,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
   public MainActivity() {
     super();
-    executor = MoreExecutors
-        .listeningDecorator(Executors.newCachedThreadPool());
   }
 
   @Override
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
   protected void onResume() {
     super.onResume();
     verifyToken();
+    configureNavigationDrawer();
   }
 
   private void verifyToken() {
@@ -57,33 +58,45 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void attachViewPager() {
-    pagerAdapter = new MainActivityPagerAdapter(this);
     this.<ViewPager2>findViewById(R.id.main_activity_pager)
-        .setAdapter(pagerAdapter);
+        .setAdapter(new MainActivityPagerAdapter(this));
 
-    new TabLayoutMediator(
-        this.findViewById(R.id.home_tab_navigation),
-        this.findViewById(R.id.main_activity_pager),
-        (tab, position) -> {
-          switch (position) {
-            case 0:
-              tab.setIcon(R.drawable.ic_bottom_navigation_home);
-              break;
-            case 1:
-              tab.setIcon(R.drawable.ic_bottom_navigation_chat);
-              break;
-            case 2:
-              tab.setIcon(R.drawable.ic_bottom_navigation_notification);
-              break;
-            case 3:
-              tab.setIcon(R.drawable.ic_bottom_navigation_user);
-              break;
-          }
-        }).attach();
+    Optional.ofNullable(findViewById(R.id.home_tab_navigation))
+        .ifPresent((tab_layout) -> {
+          new TabLayoutMediator(
+              (TabLayout) tab_layout,
+              this.findViewById(R.id.main_activity_pager),
+              (tab, position) -> {
+                switch (position) {
+                  case 0:
+                    tab.setIcon(R.drawable.ic_bottom_navigation_home);
+                    break;
+                  case 1:
+                    tab.setIcon(R.drawable.ic_bottom_navigation_chat);
+                    break;
+                  case 2:
+                    tab.setIcon(R.drawable.ic_bottom_navigation_notification);
+                    break;
+                  case 3:
+                    tab.setIcon(R.drawable.ic_bottom_navigation_user);
+                    break;
+                }
+              }).attach();
+        });
   }
 
-  MainActivityPagerAdapter pagerAdapter;
-  ListeningExecutorService executor;
+  private void configureNavigationDrawer() {
+    Optional
+        .ofNullable(this.<NavigationView>findViewById(R.id.main_drawer_navigation))
+        .ifPresent((navigationView) -> {
+          navigationView.setNavigationItemSelectedListener((item) -> {
+            switch (item.getItemId()) {
+            }
+            return true;
+          });
+        });
+  }
+
 
   public static class MainActivityPagerAdapter extends FragmentStateAdapter {
     public MainActivityPagerAdapter(@NonNull FragmentActivity fragmentActivity) {

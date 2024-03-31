@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "vn.edu.neu.veaknaz"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 30
         versionCode = 1
         versionName = "1.0"
 

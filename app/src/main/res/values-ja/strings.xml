@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="app_name" type="string">Veaknaz</item>
+
+    <string name="welcome_text">VEAKNAZへようこそ</string>
+    <string name="welcome_slogan">さらに別の ANT クライアント</string>
+
+    <string name="main_drawer_navigation_open">ナビゲーションバーを開く</string>
+    <string name="main_drawer_navigation_close">ナビゲーションバーを閉じる</string>
+    <string name="fragment_login_title">ログイン</string>
+    <string name="fragment_login_username_hint">ユーザー名</string>
+    <string name="fragment_login_password_hint">パスワード</string>
+    <string name="fragment_login_button_login">ログイン</string>
+    <string name="fragment_login_button_go_to_signup">サインアップしに行きます</string>
+    <string name="fragment_signup_title">サインアップ</string>
+    <string name="fragment_signup_username_hint">ユーザー名</string>
+    <string name="fragment_signup_password_hint">パスワード</string>
+    <string name="fragment_signup_button_signup">サインアップ</string>
+    <string name="fragment_signup_go_to_log_in">ログインに行く</string>
+</resources>

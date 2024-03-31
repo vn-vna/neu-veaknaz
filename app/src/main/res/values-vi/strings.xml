@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="app_name" type="string">Veaknaz</item>
+
+    <string name="welcome_text">Chào mừng tới với Veaknaz client</string>
+    <string name="welcome_slogan">(ANT chat client)</string>
+
+    <string name="main_drawer_navigation_open">Mở cửa sổ điều hướng</string>
+    <string name="main_drawer_navigation_close">Đóng cửa sổ điều hướng</string>
+    <string name="fragment_login_title">Đăng nhập</string>
+    <string name="fragment_login_username_hint">Tên người dùng</string>
+    <string name="fragment_login_password_hint">Mật khẩu</string>
+    <string name="fragment_login_button_login">Đăng nhập</string>
+    <string name="fragment_login_button_go_to_signup">Đi tới Đăng Ký</string>
+    <string name="fragment_signup_title">Đăng ký</string>
+    <string name="fragment_signup_username_hint">Tên người dùng</string>
+    <string name="fragment_signup_password_hint">Mật khẩu</string>
+    <string name="fragment_signup_button_signup">Đăng ký</string>
+    <string name="fragment_signup_go_to_log_in">Đi tới Đăng Nhập</string>
+</resources>
