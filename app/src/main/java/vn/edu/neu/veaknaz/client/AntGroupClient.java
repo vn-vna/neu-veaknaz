@@ -26,7 +26,7 @@ public class AntGroupClient {
   public AntGroupClient() {
     String baseUrl = VeaknazApplication.getInstance().getBaseContext().getString(R.string.ant_base_url) + "api/groups/";
 
-    Retrofit retrofit = new Retrofit.Builder()
+    var retrofit = new Retrofit.Builder()
         .addConverterFactory(JacksonConverterFactory.create())
         .baseUrl(baseUrl)
         .build();
@@ -37,19 +37,19 @@ public class AntGroupClient {
 
   public Future<String> createGroup(String groupName) {
     return executor.submit(() -> {
-      AntAuthenticationClient auth = AntAuthenticationClient.getInstance();
+      var auth = AntAuthenticationClient.getInstance();
 
       if (!auth.getUserToken().isPresent()) {
         throw new RuntimeException("Authentication ERROR");
       }
 
-      String token = auth.getUserToken().get();
-      RequestBody body = new MultipartBody.Builder()
+      var token = auth.getUserToken().get();
+      var body = new MultipartBody.Builder()
           .setType(MultipartBody.FORM)
           .addFormDataPart("name", groupName)
           .build();
       try {
-        ApiResponse<String> result = repository.create(token, body)
+        var result = repository.create(token, body)
             .execute().body();
 
         return Objects.requireNonNull(result).getResult();
@@ -61,7 +61,7 @@ public class AntGroupClient {
 
   public Future<GroupInfoView> getUserGroups() {
     return executor.submit(() -> {
-      AntAuthenticationClient auth = AntAuthenticationClient.getInstance();
+      var auth = AntAuthenticationClient.getInstance();
 
       if (!auth.getUserToken().isPresent()) {
         throw new RuntimeException("Authentication ERROR");
@@ -69,8 +69,9 @@ public class AntGroupClient {
 
       String token = auth.getUserToken().get();
       try {
-        ApiResponse<GroupInfoView> result = repository.getGroups(token)
-            .execute().body();
+        var result = repository.getGroups(token)
+            .execute()
+            .body();
 
         return Objects.requireNonNull(result).getResult();
       } catch (IOException e) {
@@ -81,13 +82,13 @@ public class AntGroupClient {
 
   public Future<GroupMemberView> getMembers(String gid) {
     return executor.submit(() -> {
-      AntAuthenticationClient auth = AntAuthenticationClient.getInstance();
+      var auth = AntAuthenticationClient.getInstance();
 
       if (!auth.getUserToken().isPresent()) {
         throw new RuntimeException("Authentication ERROR");
       }
 
-      String token = auth.getUserToken().get();
+      var token = auth.getUserToken().get();
       try {
         ApiResponse<GroupMemberView> result = repository.getMembers(token, gid)
             .execute().body();
