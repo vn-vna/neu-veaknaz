@@ -2,6 +2,8 @@ package vn.edu.neu.veaknaz.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -13,10 +15,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import vn.edu.neu.veaknaz.R;
@@ -25,6 +27,7 @@ import vn.edu.neu.veaknaz.fragment.GroupCenterFragment;
 import vn.edu.neu.veaknaz.fragment.HomeFragment;
 import vn.edu.neu.veaknaz.fragment.NotificationFragment;
 import vn.edu.neu.veaknaz.fragment.UserCenterFragment;
+import vn.edu.neu.veaknaz.util.SavedConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     EdgeToEdge.enable(this);
     setContentView(R.layout.activity_main);
+    lastSelectedMenuItem = new SavedConfiguration<>("menu_configuration", "last_selected");
 
     var token = AntAuthenticationClient.getInstance().getUserToken();
     if (token.isPresent()) {
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     attachViewPager();
+    configureNavigationDrawer();
   }
 
   @Override
@@ -61,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
     this.<ViewPager2>findViewById(R.id.main_activity_pager)
         .setAdapter(new MainActivityPagerAdapter(this));
 
-    Optional.ofNullable(findViewById(R.id.home_tab_navigation))
+    Optional.ofNullable(this.<TabLayout>findViewById(R.id.home_tab_navigation))
         .ifPresent((tab_layout) -> {
           new TabLayoutMediator(
-              (TabLayout) tab_layout,
+              tab_layout,
               this.findViewById(R.id.main_activity_pager),
               (tab, position) -> {
                 switch (position) {
@@ -82,21 +87,62 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
               }).attach();
+
+          tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            void setAppTitle(TabLayout.Tab tab) {
+              int titleId = switch (tab.getPosition()) {
+                case 0 -> R.string.activity_main_title_home;
+                case 1 -> R.string.activity_main_title_groups;
+                case 2 -> R.string.activity_main_title_messages;
+                case 3 -> R.string.activity_main_title_usercenter;
+                default -> 0;
+              };
+              MainActivity.this.<TextView>findViewById(R.id.activity_main_title).setText(titleId);
+            }
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+              setAppTitle(tab);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+              setAppTitle(tab);
+            }
+          });
+
+          Objects
+              .requireNonNull(tab_layout.getTabAt(lastSelectedMenuItem.getValue().orElse(0)))
+              .select();
         });
   }
 
   private void configureNavigationDrawer() {
-    Optional
-        .ofNullable(this.<NavigationView>findViewById(R.id.main_drawer_navigation))
-        .ifPresent((navigationView) -> {
-          navigationView.setNavigationItemSelectedListener((item) -> {
-            switch (item.getItemId()) {
-            }
-            return true;
-          });
+    Optional.<DrawerLayout>ofNullable(findViewById(R.id.activity_main_drawer))
+        .ifPresent(drawer -> {
+          drawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.activity_main_accessibility_drawer_open, R.string.activity_main_accessibility_drawer_close);
+          drawer.addDrawerListener(drawerToggle);
+          drawerToggle.syncState();
+
+          Optional.<ImageButton>ofNullable(findViewById(R.id.activity_main_button_toggle_drawer))
+              .ifPresent(button -> {
+                button.setOnClickListener((view) -> {
+                  if (drawer.isDrawerOpen(findViewById(R.id.nav_view))) {
+                    drawer.close();
+                  } else {
+                    drawer.open();
+                  }
+                });
+              });
         });
   }
 
+  private ActionBarDrawerToggle drawerToggle;
+  private SavedConfiguration<Integer> lastSelectedMenuItem;
 
   public static class MainActivityPagerAdapter extends FragmentStateAdapter {
     public MainActivityPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -106,18 +152,13 @@ public class MainActivity extends AppCompatActivity {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-      switch (position) {
-        case 0:
-          return new HomeFragment();
-        case 1:
-          return new GroupCenterFragment();
-        case 2:
-          return new NotificationFragment();
-        case 3:
-          return new UserCenterFragment();
-        default:
-          throw new IllegalArgumentException("Invalid position: " + position);
-      }
+      return switch (position) {
+        case 0 -> new HomeFragment();
+        case 1 -> new GroupCenterFragment();
+        case 2 -> new NotificationFragment();
+        case 3 -> new UserCenterFragment();
+        default -> throw new IllegalArgumentException("Invalid position: " + position);
+      };
     }
 
     @Override

@@ -18,4 +18,8 @@
     <string name="fragment_signup_button_signup">Đăng ký</string>
     <string name="fragment_signup_go_to_log_in">Đi tới Đăng Nhập</string>
     <string name="usercenter_displayname_default">Vô danh</string>
+    <string name="activity_main_title_home">Home</string>
+    <string name="activity_main_title_usercenter">Người dùng</string>
+    <string name="activity_main_title_groups">Nhóm</string>
+    <string name="activity_main_title_messages">Thông báo</string>
 </resources>

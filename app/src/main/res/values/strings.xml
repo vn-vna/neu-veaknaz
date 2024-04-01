@@ -4,6 +4,13 @@
     <string name="welcome_text">Welcome to Veaknaz</string>
     <string name="welcome_slogan">(yet another ANT client)</string>
 
+    <string name="activity_main_title_home">Home</string>
+    <string name="activity_main_title_groups">Groups</string>
+    <string name="activity_main_title_messages">Notification</string>
+    <string name="activity_main_title_usercenter">User Center</string>
+    <string name="activity_main_accessibility_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="activity_main_accessibility_drawer_close" translatable="false">Close navigation drawer</string>
+
     <string name="main_drawer_navigation_open">Open navigation drawer</string>
     <string name="main_drawer_navigation_close">Close navigation drawer</string>
     <string name="fragment_login_title">Login</string>
@@ -17,4 +24,5 @@
     <string name="fragment_signup_button_signup">Sign up</string>
     <string name="fragment_signup_go_to_log_in">Go to Login</string>
     <string name="usercenter_displayname_default">Anonymous</string>
+
 </resources>
