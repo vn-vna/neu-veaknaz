@@ -2,6 +2,7 @@ package vn.edu.neu.veaknaz.client;
 
 import java.util.Objects;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -56,10 +57,18 @@ public class AntUserInfoClient extends ApiClient<AntUserInfoClient.AntUserInfoRe
     });
   }
 
-  public void updateUserInfo(RequestBody userInfo, UserUpdateEventListener listener) {
+  public void updateUserInfo(String firstname, String lastname, String birthday, int gender, UserUpdateEventListener listener) {
     getExecutor().execute(() -> {
       try {
         var token = AntAuthenticationClient.getInstance().getUserToken().get();
+        var userInfo = new MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("firstname", firstname)
+            .addFormDataPart("lastname", lastname)
+            .addFormDataPart("birthdate", birthday)
+            .addFormDataPart("gender", String.valueOf(gender))
+            .build();
+
         var result = getRepository().updateUserInfo(token, userInfo).execute();
         var success = Objects.requireNonNull(result.body()).getResult();
         if (success) {

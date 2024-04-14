@@ -1,5 +1,7 @@
 package vn.edu.neu.veaknaz.fragment;
 
+import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +12,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 
 import io.supercharge.shimmerlayout.ShimmerLayout;
@@ -43,6 +48,7 @@ public class UserCenterFragment extends Fragment {
   private void refreshUserData() {
 
     AntUserInfoClient.getInstance().getCurrentUserInfo(new AntUserInfoClient.UserInfoEventListener() {
+      @RequiresApi(api = Build.VERSION_CODES.O)
       @Override
       public void onGetUserInfoSuccess(UserInfoView userInfo) {
         requireActivity().runOnUiThread(() -> {
@@ -61,9 +67,13 @@ public class UserCenterFragment extends Fragment {
           }
 
           displayNameTextView.setText(displayName.trim());
+
+          var birthdate = Date.from(Instant.parse(userInfo.getBirth()));
+          var birthdateString = String.format("%tF", birthdate);
+
           firstNameInput.setText(Optional.ofNullable(userInfo.getFirstname()).orElse(""));
           lastNameInput.setText(Optional.ofNullable(userInfo.getLastname()).orElse(""));
-          birthdayInput.setText(Optional.ofNullable(userInfo.getBirth()).orElse(""));
+          birthdayInput.setText(Optional.of(birthdateString).orElse(""));
         });
 
       }
@@ -95,6 +105,26 @@ public class UserCenterFragment extends Fragment {
             return true;
           });
         });
+
+    birthdayInput.setOnClickListener(view -> {
+      if (!birthdayInput.isEnabled()) {
+        return;
+      }
+
+      new DatePickerDialog(requireContext(), (datePicker, year, month, day) -> {
+        var monthString = String.valueOf(month + 1);
+        if (monthString.length() == 1) {
+          monthString = "0" + monthString;
+        }
+
+        var dayString = String.valueOf(day);
+        if (dayString.length() == 1) {
+          dayString = "0" + dayString;
+        }
+
+        birthdayInput.setText(year + "-" + monthString + "-" + dayString);
+      }, 2000, 0, 1).show();
+    });
   }
 
   @Override
@@ -117,6 +147,23 @@ public class UserCenterFragment extends Fragment {
       birthdayInput.setEnabled(false);
 
 
+
+      AntUserInfoClient.getInstance().updateUserInfo(
+          firstNameInput.getText().toString(),
+          lastNameInput.getText().toString(),
+          birthdayInput.getText().toString() + "T00:00:00Z",
+          0,
+          new AntUserInfoClient.UserUpdateEventListener() {
+            @Override
+            public void onUpdateUserInfoSuccess() {
+              refreshUserData();
+            }
+
+            @Override
+            public void onUpdateUserInfoFailed() {
+              Log.e("UserCenterFragment", "Failed to update user info");
+            }
+          });
 
       refreshUserData();
     });

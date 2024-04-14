@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -127,7 +126,13 @@ public class ChatActivity extends AppCompatActivity {
       public void onGetSuccess(GroupMemberView memberView) {
         runOnUiThread(() -> {
           Map<String, String> memberList = memberView.getMembers().stream()
-              .collect(Collectors.toMap(MemberInfoView::getId, MemberInfoView::getUsername));
+              .collect(Collectors.toMap(MemberInfoView::getId, member -> {
+                if (Objects.nonNull(member.getName()) && !member.getName().isEmpty()) {
+                  return member.getName();
+                } else {
+                  return "@" + member.getUsername();
+                }
+              }));
 
           ((MessageListAdapter) recyclerView.getAdapter()).setSenderNameMap(memberList);
         });
