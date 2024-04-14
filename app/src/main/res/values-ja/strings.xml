@@ -22,4 +22,11 @@
     <string name="activity_main_title_usercenter">ユーザーセンター</string>
     <string name="activity_main_title_groups">グループ</string>
     <string name="activity_main_title_messages">通知</string>
+    <string name="activity_chat_input_placeholder">メッセージを入力...</string>
+    <string name="activity_main_menu_change_language">言語を変えて</string>
+    <string name="activity_main_menu_add_group">グループを追加</string>
+    <string name="activity_main_menu_home">ホーム画面</string>
+    <string name="activity_main_menu_group">グループ</string>
+    <string name="activity_main_menu_notification">通知</string>
+    <string name="activity_main_menu_usercenter">ユーザーセンター</string>
 </resources>

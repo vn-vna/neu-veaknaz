@@ -24,5 +24,12 @@
     <string name="fragment_signup_button_signup">Sign up</string>
     <string name="fragment_signup_go_to_log_in">Go to Login</string>
     <string name="usercenter_displayname_default">Anonymous</string>
+    <string name="activity_chat_input_placeholder">Enter your message...</string>
+    <string name="activity_main_menu_change_language">Change language</string>
+    <string name="activity_main_menu_add_group">Add group</string>
+    <string name="activity_main_menu_home">Home</string>
+    <string name="activity_main_menu_group">Groups</string>
+    <string name="activity_main_menu_notification">Notifications</string>
+    <string name="activity_main_menu_usercenter">User Center</string>
 
 </resources>

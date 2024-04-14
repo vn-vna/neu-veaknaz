@@ -8,8 +8,9 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Optional;
 
@@ -21,7 +22,6 @@ public class HomeFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
   }
 
   @Override
@@ -32,8 +32,8 @@ public class HomeFragment extends Fragment {
   @Override
   public void onResume() {
     super.onResume();
-
-    Optional.ofNullable(requireView().<LinearLayout>findViewById(R.id.home_fragment_loading_layout))
+    changeMenu();
+    Optional.ofNullable(requireView().<LinearLayout>findViewById(R.id.fragment_home_loading_layout))
         .ifPresent(e -> {
           if (e.getVisibility() == View.VISIBLE) {
             for (int i = 0; i < e.getChildCount(); i++) {
@@ -43,6 +43,14 @@ public class HomeFragment extends Fragment {
               }
             }
           }
+        });
+  }
+
+  private void changeMenu() {
+    Optional.ofNullable(requireActivity().<NavigationView>findViewById(R.id.nav_view))
+        .ifPresent(navView -> {
+          navView.getMenu().clear();
+          navView.inflateMenu(R.menu.activity_main_menu_fragment_home);
         });
   }
 

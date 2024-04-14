@@ -22,4 +22,11 @@
     <string name="activity_main_title_usercenter">Người dùng</string>
     <string name="activity_main_title_groups">Nhóm</string>
     <string name="activity_main_title_messages">Thông báo</string>
+    <string name="activity_chat_input_placeholder">Nhập tin nhắn...</string>
+    <string name="activity_main_menu_change_language">Đổi ngôn ngữ</string>
+    <string name="activity_main_menu_add_group">Tạo nhóm</string>
+    <string name="activity_main_menu_home">Home</string>
+    <string name="activity_main_menu_group">Nhóm</string>
+    <string name="activity_main_menu_notification">Thông báo</string>
+    <string name="activity_main_menu_usercenter">Người dùng</string>
 </resources>

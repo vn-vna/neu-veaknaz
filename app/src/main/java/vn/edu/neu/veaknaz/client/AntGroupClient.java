@@ -1,116 +1,121 @@
 package vn.edu.neu.veaknaz.client;
 
-import java.io.IOException;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import vn.edu.neu.veaknaz.R;
-import vn.edu.neu.veaknaz.application.VeaknazApplication;
 import vn.edu.neu.veaknaz.client.model.ApiResponse;
 import vn.edu.neu.veaknaz.client.model.group.GroupInfoView;
 import vn.edu.neu.veaknaz.client.model.group.GroupMemberView;
 
-public class AntGroupClient {
+public class AntGroupClient extends ApiClient<AntGroupClient.AntGroupRepository> {
   public AntGroupClient() {
-    String baseUrl = VeaknazApplication.getInstance().getBaseContext().getString(R.string.ant_base_url) + "api/groups/";
-
-    var retrofit = new Retrofit.Builder()
-        .addConverterFactory(JacksonConverterFactory.create())
-        .baseUrl(baseUrl)
-        .build();
-
-    repository = retrofit.create(AntGroupRepository.class);
-    executor = Executors.newCachedThreadPool();
+    super(AntGroupRepository.class);
   }
 
-  public Future<String> createGroup(String groupName) {
-    return executor.submit(() -> {
-      var auth = AntAuthenticationClient.getInstance();
-
-      if (!auth.getUserToken().isPresent()) {
-        throw new RuntimeException("Authentication ERROR");
+  public static AntGroupClient getInstance() {
+    if (Objects.isNull(instance)) {
+      synchronized (AntGroupClient.class) {
+        if (Objects.isNull(instance)) {
+          instance = new AntGroupClient();
+        }
       }
+    }
 
-      var token = auth.getUserToken().get();
-      var body = new MultipartBody.Builder()
-          .setType(MultipartBody.FORM)
-          .addFormDataPart("name", groupName)
-          .build();
+    return instance;
+  }
+
+  public void createGroup(String name, CreateGroupListener listener) {
+    getExecutor().execute(() -> {
       try {
-        var result = repository.create(token, body)
-            .execute().body();
-
-        return Objects.requireNonNull(result).getResult();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
+        var token = AntAuthenticationClient.getInstance().getUserToken().get();
+        var body = new MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("name", name)
+            .build();
+        var result = getRepository().create(token, body).execute();
+        if (result.isSuccessful()) {
+          listener.onCreateSuccess();
+        } else {
+          listener.onCreateFailed();
+        }
+      } catch (Exception e) {
+        listener.onCreateFailed();
       }
     });
   }
 
-  public Future<GroupInfoView> getUserGroups() {
-    return executor.submit(() -> {
-      var auth = AntAuthenticationClient.getInstance();
-
-      if (!auth.getUserToken().isPresent()) {
-        throw new RuntimeException("Authentication ERROR");
-      }
-
-      String token = auth.getUserToken().get();
+  public void getUserGroups(GetUserGroupsListener listener) {
+    getExecutor().execute(() -> {
       try {
-        var result = repository.getGroups(token)
-            .execute()
-            .body();
-
-        return Objects.requireNonNull(result).getResult();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
+        var token = AntAuthenticationClient.getInstance().getUserToken().get();
+        var result = getRepository().getGroups(token).execute();
+        if (result.isSuccessful()) {
+          listener.onGetSuccess(Objects.requireNonNull(result.body()).getResult());
+        } else {
+          listener.onGetFailed();
+        }
+      } catch (Exception e) {
+        listener.onGetFailed();
       }
     });
   }
 
-  public Future<GroupMemberView> getMembers(String gid) {
-    return executor.submit(() -> {
-      var auth = AntAuthenticationClient.getInstance();
-
-      if (!auth.getUserToken().isPresent()) {
-        throw new RuntimeException("Authentication ERROR");
-      }
-
-      var token = auth.getUserToken().get();
+  public void getGroupMembers(String gid, GetGroupMemberListener listener) {
+    getExecutor().execute(() -> {
       try {
-        ApiResponse<GroupMemberView> result = repository.getMembers(token, gid)
-            .execute().body();
-
-        return Objects.requireNonNull(result).getResult();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
+        var token = AntAuthenticationClient.getInstance().getUserToken().get();
+        var result = getRepository().getMembers(token, gid).execute();
+        if (result.isSuccessful()) {
+          listener.onGetSuccess(Objects.requireNonNull(result.body()).getResult());
+        } else {
+          listener.onGetFailed();
+        }
+      } catch (Exception e) {
+        listener.onGetFailed();
       }
     });
   }
 
-  private final AntGroupRepository repository;
-  private final ExecutorService executor;
+  private static AntGroupClient instance;
 
   public interface AntGroupRepository {
-    @POST
-    Call<ApiResponse<String>> create(@Header("USER_TOKEN") String token, @Body RequestBody body);
+    @POST("/api/groups")
+    Call<ApiResponse<Boolean>> create(
+        @Header("USER_TOKEN") String token,
+        @Body RequestBody body);
 
-    @GET
-    Call<ApiResponse<GroupInfoView>> getGroups(@Header("USER_TOKEN") String token);
+    @GET("/api/groups")
+    Call<ApiResponse<GroupInfoView>> getGroups(
+        @Header("USER_TOKEN") String token);
 
-    @GET("{gid}/members")
-    Call<ApiResponse<GroupMemberView>> getMembers(@Header("USER_TOKEN") String token, @Path("gid") String gid);
+    @GET("/api/groups/{gid}/members")
+    Call<ApiResponse<GroupMemberView>> getMembers(
+        @Header("USER_TOKEN") String token,
+        @Path("gid") String gid);
+  }
+
+  public interface CreateGroupListener {
+    void onCreateSuccess();
+
+    void onCreateFailed();
+  }
+
+  public interface GetUserGroupsListener {
+    void onGetSuccess(GroupInfoView infoView);
+
+    void onGetFailed();
+  }
+
+  public interface GetGroupMemberListener {
+    void onGetSuccess(GroupMemberView memberView);
+
+    void onGetFailed();
   }
 }

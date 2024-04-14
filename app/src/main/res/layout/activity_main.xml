@@ -5,7 +5,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
     <androidx.drawerlayout.widget.DrawerLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -107,8 +106,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:fitsSystemWindows="true"
-                android:backgroundTint="@color/background_light"
-                app:menu="@menu/activity_main" />
+                android:backgroundTint="@color/background_light" />
+
     </androidx.drawerlayout.widget.DrawerLayout>
 
 </FrameLayout>

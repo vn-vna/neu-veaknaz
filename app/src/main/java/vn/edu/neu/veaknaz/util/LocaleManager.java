@@ -32,6 +32,7 @@ public class LocaleManager {
     var config = baseContext.getResources().getConfiguration();
     config.setLocale(locale);
     baseContext.getResources().updateConfiguration(config, baseContext.getResources().getDisplayMetrics());
+    savedConfiguration.save(localeCode);
   }
 
   private final Context baseContext;

@@ -13,7 +13,6 @@
             android:icon="@mipmap/ic_ant_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_ant_launcher_round"
-            android:supportsRtl="true"
             android:theme="@style/Theme.Veaknaz"
             android:usesCleartextTraffic="true"
             tools:targetApi="31">
@@ -23,15 +22,18 @@
         <activity
                 android:name=".view.WelcomeActivity"
                 android:exported="false" />
-        <activity android:name=".view.ChatActivity"
-            android:exported="false" />
+        <activity
+                android:name=".view.ChatActivity"
+                android:exported="false"
+                android:theme="@style/Theme.Veaknaz">
+        </activity>
+
         <activity
                 android:name=".view.MainActivity"
                 android:exported="true"
                 android:theme="@style/Theme.Veaknaz">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
