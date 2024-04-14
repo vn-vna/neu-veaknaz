@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 import vn.edu.neu.veaknaz.R;
@@ -31,6 +33,7 @@ import vn.edu.neu.veaknaz.client.model.message.MessageInGroupView;
 import vn.edu.neu.veaknaz.controller.chat.ConsecutiveMessageViewModel;
 import vn.edu.neu.veaknaz.controller.chat.MessageContent;
 import vn.edu.neu.veaknaz.controller.chat.MessageListAdapter;
+import vn.edu.neu.veaknaz.fragment.InviteUserDialog;
 
 public class ChatActivity extends AppCompatActivity {
   @Override
@@ -77,6 +80,13 @@ public class ChatActivity extends AppCompatActivity {
       });
     });
 
+    ImageButton buttonInvite = findViewById(R.id.activity_chat_button_add_member);
+    buttonInvite.setOnClickListener(v -> {
+      var inviteDialog = new InviteUserDialog();
+      inviteDialog.setGid(gid);
+      inviteDialog.show(getSupportFragmentManager(), "inviteDialog");
+    });
+
     ImageButton buttonBack = findViewById(R.id.activity_chat_button_back);
     buttonBack.setOnClickListener(v -> finish());
   }
@@ -84,8 +94,16 @@ public class ChatActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    refreshMemberList();
-    refreshMessages();
+
+    timer = new Timer();
+    timer.scheduleAtFixedRate(new TimerTask() {
+      @Override
+      public void run() {
+        refreshMemberList();
+        refreshMessages();
+      }
+
+    }, 0, 1000);
   }
 
   private void refreshMessages() {
@@ -109,7 +127,9 @@ public class ChatActivity extends AppCompatActivity {
           }
 
           ((MessageListAdapter) recyclerView.getAdapter()).setMessageList(messageList);
+          recyclerView.scrollToPosition(messageList.size() - 1);
         });
+
       }
 
       @Override
@@ -117,6 +137,12 @@ public class ChatActivity extends AppCompatActivity {
         Log.d("ChatActivity", "Failed to get messages");
       }
     });
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    timer.cancel();
   }
 
   private void refreshMemberList() {
@@ -149,6 +175,5 @@ public class ChatActivity extends AppCompatActivity {
   private String groupName;
   private EditText editTextMessage;
   private RecyclerView recyclerView;
-
-
+  private Timer timer;
 }

@@ -19,7 +19,7 @@
             android:layout_marginBottom="1dp">
 
         <Button
-                android:text="Save Info"
+                android:text="@string/usercenter_button_save_info"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,7 +40,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-                android:text="Display Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/primary"
@@ -52,7 +51,6 @@
                 android:textSize="24sp" />
 
         <TextView
-                android:text="Username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/usercenter_username"
@@ -84,7 +82,7 @@
                     android:id="@+id/input_group_birthday">
 
                 <TextView
-                        android:text="Birthday"
+                        android:text="@string/usercenter_birthday_label"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/usercenter_label_birthday"
@@ -122,7 +120,7 @@
                     android:id="@+id/input_group_firstname">
 
                 <TextView
-                        android:text="First Name"
+                        android:text="@string/usercenter_firstname_label"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/usercenter_label_firstname"
@@ -155,7 +153,7 @@
                     tools:layout_editor_absoluteX="63dp">
 
                 <TextView
-                        android:text="Last Name"
+                        android:text="@string/usercenter_lastname_label"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/usercenter_label_lastname"

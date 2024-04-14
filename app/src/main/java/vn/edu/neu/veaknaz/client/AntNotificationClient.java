@@ -1,14 +1,35 @@
 package vn.edu.neu.veaknaz.client;
 
+import android.util.Log;
+
 import com.microsoft.signalr.HubConnection;
 import com.microsoft.signalr.HubConnectionBuilder;
 
 import java.util.Objects;
 
+import vn.edu.neu.veaknaz.R;
+import vn.edu.neu.veaknaz.application.VeaknazApplication;
+
 public class AntNotificationClient {
   private AntNotificationClient() {
-    notificationHub = HubConnectionBuilder.create("http://localhost:5192")
+    var url = VeaknazApplication.getInstance().getBaseContext().getString(R.string.ant_base_url);
+    notificationHub = HubConnectionBuilder.create(url + "hub/notifications")
         .build();
+
+    notificationHub.on("Invitation", (message) -> {
+      Log.d("Notification", "Invitation " + message);
+    }, String.class);
+
+    notificationHub.on("Message", (message) -> {
+      Log.d("Notification", "Message " + message);
+    }, String.class);
+
+    notificationHub.start()
+        .subscribe(() -> {
+          Log.d("Notification", "Connected");
+        }, error -> {
+          Log.e("Notification", "Error: " + error.getMessage());
+        });
   }
 
   public static AntNotificationClient getInstance() {
@@ -23,14 +44,6 @@ public class AntNotificationClient {
     return _instance;
   }
 
-  public HubConnection getNotificationHub() {
-    return notificationHub;
-  }
-
-  public void setNotificationHub(HubConnection notificationHub) {
-    this.notificationHub = notificationHub;
-  }
-
   private static AntNotificationClient _instance;
-  HubConnection notificationHub;
+  private final HubConnection notificationHub;
 }

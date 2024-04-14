@@ -24,9 +24,9 @@ import java.util.Optional;
 import vn.edu.neu.veaknaz.R;
 import vn.edu.neu.veaknaz.client.AntAuthenticationClient;
 import vn.edu.neu.veaknaz.fragment.GroupCenterFragment;
-import vn.edu.neu.veaknaz.fragment.HomeFragment;
 import vn.edu.neu.veaknaz.fragment.NotificationFragment;
 import vn.edu.neu.veaknaz.fragment.UserCenterFragment;
+import vn.edu.neu.veaknaz.util.LocaleManager;
 import vn.edu.neu.veaknaz.util.SavedConfiguration;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     EdgeToEdge.enable(this);
     setContentView(R.layout.activity_main);
+
+    localeManager = new LocaleManager(this);
     lastSelectedMenuItem = new SavedConfiguration<>("menu_configuration", "last_selected");
 
     var token = AntAuthenticationClient.getInstance().getUserToken();
@@ -63,8 +65,9 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void attachViewPager() {
-    this.<ViewPager2>findViewById(R.id.main_activity_pager)
-        .setAdapter(new MainActivityPagerAdapter(this));
+    var viewPager = this.<ViewPager2>findViewById(R.id.main_activity_pager);
+    viewPager.setOffscreenPageLimit(2);
+    viewPager.setAdapter(new MainActivityPagerAdapter(this));
 
     Optional.ofNullable(this.<TabLayout>findViewById(R.id.home_tab_navigation))
         .ifPresent((tab_layout) -> {
@@ -137,8 +140,13 @@ public class MainActivity extends AppCompatActivity {
         });
   }
 
+  public LocaleManager getLocaleManager() {
+    return localeManager;
+  }
+
   private ActionBarDrawerToggle drawerToggle;
   private SavedConfiguration<Integer> lastSelectedMenuItem;
+  private LocaleManager localeManager;
 
   public static class MainActivityPagerAdapter extends FragmentStateAdapter {
     public MainActivityPagerAdapter(@NonNull FragmentActivity fragmentActivity) {

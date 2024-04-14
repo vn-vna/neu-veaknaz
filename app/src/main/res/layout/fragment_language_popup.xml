@@ -10,7 +10,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose Language"
+        android:text="@string/choose_language"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -25,20 +25,20 @@
             android:id="@+id/radioButtonEnglish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="English"
+            android:text="@string/choose_language_english"
             android:checked="true" />
 
         <RadioButton
-            android:id="@+id/radioButtonFrench"
+            android:id="@+id/radioButtonVietnamese"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vietnamese" />
+            android:text="@string/choose_language_vietnamese" />
 
         <RadioButton
-            android:id="@+id/radioButtonSpanish"
+            android:id="@+id/radioButtonJapanese"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Japanese" />
+            android:text="@string/choose_language_japanese" />
 
         <!-- Add more language options as needed -->
 

@@ -1,6 +1,7 @@
 package vn.edu.neu.veaknaz.fragment;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,12 +21,16 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 import io.supercharge.shimmerlayout.ShimmerLayout;
 import vn.edu.neu.veaknaz.R;
+import vn.edu.neu.veaknaz.client.AntAuthenticationClient;
 import vn.edu.neu.veaknaz.client.AntUserInfoClient;
 import vn.edu.neu.veaknaz.client.model.user.UserInfoView;
+import vn.edu.neu.veaknaz.view.AuthenticationActivity;
+import vn.edu.neu.veaknaz.view.WelcomeActivity;
 
 public class UserCenterFragment extends Fragment {
 
@@ -68,12 +73,15 @@ public class UserCenterFragment extends Fragment {
 
           displayNameTextView.setText(displayName.trim());
 
-          var birthdate = Date.from(Instant.parse(userInfo.getBirth()));
-          var birthdateString = String.format("%tF", birthdate);
-
           firstNameInput.setText(Optional.ofNullable(userInfo.getFirstname()).orElse(""));
           lastNameInput.setText(Optional.ofNullable(userInfo.getLastname()).orElse(""));
-          birthdayInput.setText(Optional.of(birthdateString).orElse(""));
+
+          if (Objects.nonNull(userInfo.getBirth())) {
+            var birthdate = Date.from(Instant.parse(userInfo.getBirth()));
+            var birthdateString = String.format("%tF", birthdate);
+
+            birthdayInput.setText(Optional.of(birthdateString).orElse(""));
+          }
         });
 
       }
@@ -104,27 +112,19 @@ public class UserCenterFragment extends Fragment {
 
             return true;
           });
+
+          var logoutMenuItem = navView.getMenu().findItem(R.id.activity_main_menu_item_logout);
+          logoutMenuItem.setOnMenuItemClickListener((item) -> {
+            AntAuthenticationClient.getInstance().signOut(() -> {
+              requireActivity().finish();
+
+              Intent intent = new Intent(requireActivity(), WelcomeActivity.class);
+              startActivity(intent);
+            });
+            return true;
+          });
         });
 
-    birthdayInput.setOnClickListener(view -> {
-      if (!birthdayInput.isEnabled()) {
-        return;
-      }
-
-      new DatePickerDialog(requireContext(), (datePicker, year, month, day) -> {
-        var monthString = String.valueOf(month + 1);
-        if (monthString.length() == 1) {
-          monthString = "0" + monthString;
-        }
-
-        var dayString = String.valueOf(day);
-        if (dayString.length() == 1) {
-          dayString = "0" + dayString;
-        }
-
-        birthdayInput.setText(year + "-" + monthString + "-" + dayString);
-      }, 2000, 0, 1).show();
-    });
   }
 
   @Override
@@ -147,7 +147,6 @@ public class UserCenterFragment extends Fragment {
       birthdayInput.setEnabled(false);
 
 
-
       AntUserInfoClient.getInstance().updateUserInfo(
           firstNameInput.getText().toString(),
           lastNameInput.getText().toString(),
@@ -167,6 +166,27 @@ public class UserCenterFragment extends Fragment {
 
       refreshUserData();
     });
+
+    birthdayInput.setOnClickListener(v -> {
+      if (!birthdayInput.isEnabled()) {
+        return;
+      }
+
+      new DatePickerDialog(requireContext(), (datePicker, year, month, day) -> {
+        var monthString = String.valueOf(month + 1);
+        if (monthString.length() == 1) {
+          monthString = "0" + monthString;
+        }
+
+        var dayString = String.valueOf(day);
+        if (dayString.length() == 1) {
+          dayString = "0" + dayString;
+        }
+
+        birthdayInput.setText(year + "-" + monthString + "-" + dayString);
+      }, 2000, 0, 1).show();
+    });
+
   }
 
   @Override

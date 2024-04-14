@@ -31,4 +31,19 @@
     <string name="activity_main_menu_usercenter">Người Dùng</string>
     <string name="activity_main_menu_edit_user">Sửa Thông Tin</string>
     <string name="activity_main_menu_add_member">Thêm Thành Viên</string>
+    <string name="invite_user_success">Mời thành công</string>
+    <string name="invite_user_failed">Mời không thành công</string>
+    <string name="choose_language">Chọn Ngôn Ngữ</string>
+    <string name="choose_language_english">English</string>
+    <string name="choose_language_vietnamese">Tiếng Việt</string>
+    <string name="choose_language_japanese">日本語</string>
+    <string name="invite_user_popup_title">Mời một người</string>
+    <string name="invite_user_popup_usernamne">Tên người dùng</string>
+    <string name="invite_user_popup_confirm">Mời</string>
+    <string name="invite_user_popup_cancel">Huỷ</string>
+    <string name="usercenter_button_save_info">Lưu</string>
+    <string name="usercenter_birthday_label">Ngày sinh</string>
+    <string name="usercenter_firstname_label">Họ</string>
+    <string name="usercenter_lastname_label">Tên</string>
+    <string name="activity_main_menu_logout">Đăng xuất</string>
 </resources>

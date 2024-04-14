@@ -33,5 +33,20 @@
     <string name="activity_main_menu_usercenter">User Center</string>
     <string name="activity_main_menu_edit_user">Edit User</string>
     <string name="activity_main_menu_add_member">Add Member</string>
+    <string name="invite_user_success">Invite user success</string>
+    <string name="invite_user_failed">Invite user failed</string>
+    <string name="choose_language">Choose Language</string>
+    <string name="choose_language_english">English</string>
+    <string name="choose_language_vietnamese">Tiếng Việt</string>
+    <string name="choose_language_japanese">日本語</string>
+    <string name="invite_user_popup_title">Invite a user</string>
+    <string name="invite_user_popup_usernamne">Username</string>
+    <string name="invite_user_popup_confirm">Invite</string>
+    <string name="invite_user_popup_cancel">Cancel</string>
+    <string name="usercenter_button_save_info">Save Info</string>
+    <string name="usercenter_birthday_label">Birthday</string>
+    <string name="usercenter_firstname_label">First Name</string>
+    <string name="usercenter_lastname_label">Last Name</string>
+    <string name="activity_main_menu_logout">Logout</string>
 
 </resources>

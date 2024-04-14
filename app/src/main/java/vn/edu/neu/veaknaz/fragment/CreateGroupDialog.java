@@ -2,7 +2,6 @@ package vn.edu.neu.veaknaz.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,45 +14,66 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import vn.edu.neu.veaknaz.R;
+import vn.edu.neu.veaknaz.client.AntGroupClient;
 
 public class CreateGroupDialog extends DialogFragment {
 
-    private EditText etGroupName;
+  @NonNull
+  @Override
+  public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+    LayoutInflater inflater = requireActivity().getLayoutInflater();
+    View view = inflater.inflate(R.layout.activity_create_group, null);
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.activity_create_group, null);
+    etGroupName = view.findViewById(R.id.etGroupName);
+    Button btnCreateGroup = view.findViewById(R.id.btnCreateGroup);
+    Button btnCancel = view.findViewById(R.id.btnCancel);
 
-        etGroupName = view.findViewById(R.id.etGroupName);
-        Button btnCreateGroup = view.findViewById(R.id.btnCreateGroup);
-        Button btnCancel = view.findViewById(R.id.btnCancel);
+    btnCancel.setOnClickListener(v -> dismiss());
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+    btnCreateGroup.setOnClickListener(v -> {
+      String groupName = etGroupName.getText().toString();
+
+      AntGroupClient.getInstance()
+          .createGroup(groupName, new AntGroupClient.CreateGroupListener() {
             @Override
-            public void onClick(View v) {
-                dismiss();
+            public void onCreateSuccess() {
+              requireActivity().runOnUiThread(() -> {
+                Toast.makeText(requireContext(), "Create group success", Toast.LENGTH_SHORT).show();
+                getListener().onCreateGroupSuccess();
+              });
             }
-        });
 
-        btnCreateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String groupName = etGroupName.getText().toString();
-
-                // Thực hiện xử lý tạo nhóm hộp chứa tại đây
-
-                Toast.makeText(getActivity(),
-                        "Group created: " + groupName,
-                        Toast.LENGTH_SHORT).show();
-
-                dismiss();
+            public void onCreateFailed() {
+              requireActivity().runOnUiThread(() -> {
+                Toast.makeText(requireContext(), "Create group failed", Toast.LENGTH_SHORT).show();
+                getListener().onCreateGroupFailed();
+              });
             }
-        });
+          });
 
-        builder.setView(view);
-        return builder.create();
-    }
+      dismiss();
+    });
+
+    builder.setView(view);
+    return builder.create();
+  }
+
+  public CreateGroupDialogListener getListener() {
+    return listener;
+  }
+
+  public void setListener(CreateGroupDialogListener listener) {
+    this.listener = listener;
+  }
+
+  private EditText etGroupName;
+  private CreateGroupDialogListener listener;
+
+  public interface CreateGroupDialogListener {
+    void onCreateGroupSuccess();
+
+    void onCreateGroupFailed();
+  }
 }

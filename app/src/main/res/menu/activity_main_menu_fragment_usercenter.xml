@@ -6,4 +6,7 @@
     <item
             android:title="@string/activity_main_menu_change_language"
             android:id="@+id/activity_main_menu_item_change_language" />
+    <item
+            android:title="@string/activity_main_menu_logout"
+            android:id="@+id/activity_main_menu_item_logout" />
 </menu>

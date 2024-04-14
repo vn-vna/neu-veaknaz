@@ -13,6 +13,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import vn.edu.neu.veaknaz.client.model.ApiResponse;
 import vn.edu.neu.veaknaz.client.model.invitation.UserInvitationView;
+import vn.edu.neu.veaknaz.client.model.user.UserSearchView;
 
 public class AntInvitationClient extends ApiClient<AntInvitationClient.AntInvitationRepository> {
 
@@ -73,18 +74,55 @@ public class AntInvitationClient extends ApiClient<AntInvitationClient.AntInvita
 
   public void sendInvitation(String gid, String username, SendInvitationListener listener) {
     getExecutor().execute(() -> {
-      try {
-        var token = AntAuthenticationClient.getInstance().getUserToken().get();
-        var body = new MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("gid", gid)
-            .addFormDataPart("username", username)
-            .build();
-        getRepository().sendInvitation(token, body);
-        listener.onSendSuccess();
-      } catch (Exception e) {
-        listener.onSendFailed();
-      }
+      var token = AntAuthenticationClient.getInstance().getUserToken().get();
+
+      AntUserInfoClient
+          .getInstance()
+          .searchUser(username, 10, new AntUserInfoClient.UserSearchEventListener() {
+            @Override
+            public void onSearchUserSuccess(UserSearchView userSearchView) {
+              if (userSearchView.getUsers().isEmpty()) {
+                listener.onSendFailed();
+              }
+
+              String uid = null;
+              for (var user : userSearchView.getUsers()) {
+                if (user.getUsername().equals(username)) {
+                  uid = user.getUid();
+                  break;
+                }
+              }
+
+              if (uid == null) {
+                listener.onSendFailed();
+                return;
+              }
+
+              try {
+
+                var body = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("gid", gid)
+                    .addFormDataPart("uid", uid)
+                    .build();
+
+                var result = getRepository().sendInvitation(token, body).execute();
+                if (result.isSuccessful()) {
+                  listener.onSendSuccess();
+                } else {
+                  listener.onSendFailed();
+                }
+              } catch (Exception e) {
+                listener.onSendFailed();
+              }
+            }
+
+            @Override
+            public void onSearchUserFailed() {
+
+            }
+          });
+
     });
   }
 
@@ -96,17 +134,17 @@ public class AntInvitationClient extends ApiClient<AntInvitationClient.AntInvita
         @Header("USER_TOKEN") String userToken);
 
     @PUT("/api/invitations/{invitationId}/accept")
-    void acceptInvitation(
+    Call<ApiResponse<Boolean>> acceptInvitation(
         @Header("USER_TOKEN") String userToken,
         @Path("invitationId") String invitationId);
 
     @PUT("/api/invitations/{invitationId}/reject")
-    void rejectInvitation(
+    Call<ApiResponse<Boolean>> rejectInvitation(
         @Header("USER_TOKEN") String userToken,
         @Path("invitationId") String invitationId);
 
     @POST("/api/invitations")
-    void sendInvitation(
+    Call<ApiResponse<String>> sendInvitation(
         @Header("USER_TOKEN") String userToken,
         @Body RequestBody body);
   }

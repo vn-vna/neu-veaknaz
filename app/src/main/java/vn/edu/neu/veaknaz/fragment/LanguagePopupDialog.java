@@ -2,67 +2,67 @@ package vn.edu.neu.veaknaz.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Objects;
+
 import vn.edu.neu.veaknaz.R;
 
 public class LanguagePopupDialog extends DialogFragment {
-    private RadioGroup radioGroupLanguages;
+  public void setLanguageSelectionListener(LanguageSelectionListener listener) {
+    this.languageSelectionListener = listener;
+  }
 
-    public interface LanguageSelectionListener {
-        void onLanguageSelected(String language);
-    }
+  @NonNull
+  @Override
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
 
-    private LanguageSelectionListener languageSelectionListener;
+    LayoutInflater inflater = requireActivity().getLayoutInflater();
+    View view = inflater.inflate(R.layout.fragment_language_popup, null);
+    builder.setView(view);
 
-    public void setLanguageSelectionListener(LanguageSelectionListener listener) {
-        this.languageSelectionListener = listener;
-    }
+    radioGroupLanguages = view.findViewById(R.id.radioGroupLanguages);
+    Button btnCancel = view.findViewById(R.id.btnCancel);
+    Button btnOk = view.findViewById(R.id.btnOk);
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+    btnCancel.setOnClickListener(v -> dismiss());
 
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_language_popup, null);
-        builder.setView(view);
+    btnOk.setOnClickListener(v -> {
+      int selectedId = radioGroupLanguages.getCheckedRadioButtonId();
 
-        radioGroupLanguages = view.findViewById(R.id.radioGroupLanguages);
-        Button btnCancel = view.findViewById(R.id.btnCancel);
-        Button btnOk = view.findViewById(R.id.btnOk);
+      if (selectedId == -1) {
+        return;
+      }
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+      if (Objects.isNull(languageSelectionListener)) {
+        return;
+      }
 
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int selectedId = radioGroupLanguages.getCheckedRadioButtonId();
-                RadioButton radioButton = view.findViewById(selectedId);
-                String selectedLanguage = radioButton.getText().toString();
+      if (selectedId == R.id.radioButtonEnglish) {
+        languageSelectionListener.onLanguageSelected("en");
+      } else if (selectedId == R.id.radioButtonVietnamese) {
+        languageSelectionListener.onLanguageSelected("vi");
+      } else if (selectedId == R.id.radioButtonJapanese) {
+        languageSelectionListener.onLanguageSelected("ja");
+      }
 
-                if (languageSelectionListener != null) {
-                    languageSelectionListener.onLanguageSelected(selectedLanguage);
-                }
+      dismiss();
+    });
 
-                dismiss();
-            }
-        });
+    return builder.create();
+  }
+  private RadioGroup radioGroupLanguages;
+  private LanguageSelectionListener languageSelectionListener;
 
-        return builder.create();
-    }
+  public interface LanguageSelectionListener {
+    void onLanguageSelected(String language);
+  }
 }

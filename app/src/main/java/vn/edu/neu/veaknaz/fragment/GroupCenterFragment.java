@@ -23,6 +23,7 @@ import vn.edu.neu.veaknaz.client.AntGroupClient;
 import vn.edu.neu.veaknaz.client.model.group.GroupInfoView;
 import vn.edu.neu.veaknaz.controller.group.GroupItemModel;
 import vn.edu.neu.veaknaz.controller.group.GroupListAdapter;
+import vn.edu.neu.veaknaz.view.MainActivity;
 
 public class GroupCenterFragment extends Fragment {
 
@@ -54,6 +55,7 @@ public class GroupCenterFragment extends Fragment {
     groupListView = requireView().findViewById(R.id.group_center_recycler_view);
     groupListView.setAdapter(groupListAdapter);
     groupListView.setLayoutManager(new LinearLayoutManager(this.requireActivity()));
+
   }
 
   @Override
@@ -68,6 +70,43 @@ public class GroupCenterFragment extends Fragment {
         .ifPresent(navView -> {
           navView.getMenu().clear();
           navView.inflateMenu(R.menu.activity_main_menu_fragment_group);
+
+          navView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.activity_main_menu_item_add_group) {
+
+              var createGroupDialog = new CreateGroupDialog();
+              createGroupDialog.setListener(new CreateGroupDialog.CreateGroupDialogListener() {
+                @Override
+                public void onCreateGroupSuccess() {
+                  refreshGroupList();
+                }
+
+                @Override
+                public void onCreateGroupFailed() {
+                }
+              });
+
+              createGroupDialog.show(requireActivity().getSupportFragmentManager(), "CreateGroupDialog");
+
+              return true;
+            }
+
+            if (item.getItemId() == R.id.activity_main_menu_item_change_language) {
+              var changeLanguageDialog = new LanguagePopupDialog();
+
+              changeLanguageDialog.setLanguageSelectionListener(language -> {
+                ((MainActivity) requireActivity())
+                    .getLocaleManager()
+                    .setLocale(language);
+
+                requireActivity().recreate();
+              });
+
+              changeLanguageDialog.show(requireActivity().getSupportFragmentManager(), "LanguagePopupDialog");
+              return true;
+            }
+            return false;
+          });
         });
   }
 

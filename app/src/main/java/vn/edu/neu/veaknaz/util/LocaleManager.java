@@ -31,8 +31,14 @@ public class LocaleManager {
     Locale.setDefault(locale);
     var config = baseContext.getResources().getConfiguration();
     config.setLocale(locale);
-    baseContext.getResources().updateConfiguration(config, baseContext.getResources().getDisplayMetrics());
+    baseContext
+        .getResources()
+        .updateConfiguration(config, baseContext.getResources().getDisplayMetrics());
     savedConfiguration.save(localeCode);
+  }
+
+  public String getCurrentLocaleCode() {
+    return savedConfiguration.getValue().get();
   }
 
   private final Context baseContext;
