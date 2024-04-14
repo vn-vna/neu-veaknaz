@@ -1,15 +1,14 @@
 package vn.edu.neu.veaknaz.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import vn.edu.neu.veaknaz.R;
-import vn.edu.neu.veaknaz.fragment.CreateGroupFragment;
-import vn.edu.neu.veaknaz.fragment.LanguagePopupFragment;
+import vn.edu.neu.veaknaz.fragment.CreateGroupDialog;
+import vn.edu.neu.veaknaz.fragment.LanguagePopupDialog;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -22,22 +21,16 @@ public class TestActivity extends AppCompatActivity {
         buttonLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LanguagePopupFragment languagePopupFragment = new LanguagePopupFragment();
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.add(android.R.id.content, languagePopupFragment).addToBackStack(null).commit();
+                LanguagePopupDialog languagePopupDialog = new LanguagePopupDialog();
+                languagePopupDialog.show(getSupportFragmentManager(), "LanguagePopupDialog");
             }
         });
 
         buttongroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateGroupFragment CreateGroupFragment = new CreateGroupFragment();
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.add(android.R.id.content, CreateGroupFragment).addToBackStack(null).commit();
+                CreateGroupDialog createGroupDialog = new CreateGroupDialog();
+                createGroupDialog.show(getSupportFragmentManager(), "CreateGroupPopupDialog");
             }
         });
     }

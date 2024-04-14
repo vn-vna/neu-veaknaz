@@ -1,7 +1,7 @@
-<!-- fragment_language_popup.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -52,9 +52,6 @@
         android:gravity="end">
 
         <!-- Cancel Button -->
-
-        <!-- OK Button -->
-
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
@@ -62,6 +59,7 @@
             android:text="Cancel"
             android:layout_marginRight="10dp"/>
 
+        <!-- OK Button -->
         <Button
             android:id="@+id/btnOk"
             android:layout_width="wrap_content"
