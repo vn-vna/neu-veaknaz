@@ -1,0 +1,73 @@
+<!-- fragment_language_popup.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Language"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Language Options -->
+    <RadioGroup
+        android:id="@+id/radioGroupLanguages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioButtonEnglish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="English"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioButtonFrench"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vietnamese" />
+
+        <RadioButton
+            android:id="@+id/radioButtonSpanish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Japanese" />
+
+        <!-- Add more language options as needed -->
+
+    </RadioGroup>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <!-- Cancel Button -->
+
+        <!-- OK Button -->
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,25 +1,27 @@
-package vn.edu.neu.veaknaz.view;
+package vn.edu.neu.veaknaz.fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.fragment.app.Fragment;
 
 import vn.edu.neu.veaknaz.R;
 
-public class CreateGroupActivity extends AppCompatActivity {
+public class CreateGroupFragment extends Fragment {
 
-    private EditText etGroupName, etGroupDescription;
+    private EditText etGroupName;
     private Button btnCreateGroup;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_group);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_create_group, container, false);
 
-        etGroupName = findViewById(R.id.etGroupName);
-        btnCreateGroup = findViewById(R.id.btnCreateGroup);
+        etGroupName = view.findViewById(R.id.etGroupName);
+        btnCreateGroup = view.findViewById(R.id.btnCreateGroup);
 
         btnCreateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,10 +30,12 @@ public class CreateGroupActivity extends AppCompatActivity {
 
                 // Thực hiện xử lý tạo nhóm hộp chứa tại đây
 
-                Toast.makeText(CreateGroupActivity.this,
+                Toast.makeText(getActivity(),
                         "Group created: " + groupName,
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        return view;
     }
 }
