@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import vn.edu.neu.veaknaz.R;
 import vn.edu.neu.veaknaz.fragment.CreateGroupDialog;
+import vn.edu.neu.veaknaz.fragment.InviteUserDialog;
 import vn.edu.neu.veaknaz.fragment.LanguagePopupDialog;
 
 public class TestActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         Button buttonLanguage = findViewById(R.id.ButtonLanguage);
         Button buttongroup = findViewById(R.id.CreateGroup);
+        Button buttonInvite = findViewById(R.id.btnInviteUser);
         buttonLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,6 +35,24 @@ public class TestActivity extends AppCompatActivity {
                 createGroupDialog.show(getSupportFragmentManager(), "CreateGroupPopupDialog");
             }
         });
+
+        buttongroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateGroupDialog createGroupDialog = new CreateGroupDialog();
+                createGroupDialog.show(getSupportFragmentManager(), "CreateGroupPopupDialog");
+            }
+        });
+
+        buttonInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InviteUserDialog inviteUserDialog = new InviteUserDialog();
+                inviteUserDialog.show(getSupportFragmentManager(), "InviteMemberPopupDialog");
+            }
+        });
+
+
     }
 
 
