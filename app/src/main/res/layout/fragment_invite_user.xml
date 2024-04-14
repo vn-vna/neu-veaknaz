@@ -14,29 +14,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Create A Group"
+            android:text="Invite a user"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/etGroupName"
+            android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Group Name"
+            android:hint="Username"
             android:inputType="text" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start">
+            android:gravity="start"
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnCreateGroup"
+                android:id="@+id/btnInviteUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:text="Invite" />
 
             <Button
                 android:id="@+id/btnCancel"
