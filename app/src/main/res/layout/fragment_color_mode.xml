@@ -10,37 +10,31 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose Language"
+        android:text="Choose Mode"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <!-- Language Options -->
     <RadioGroup
-        android:id="@+id/radioGroupLanguages"
+        android:id="@+id/radioGroupModes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RadioButton
-            android:id="@+id/radioButtonEnglish"
+            android:id="@+id/radioButtonLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="English"
+            android:text="Light"
             android:checked="true" />
 
         <RadioButton
-            android:id="@+id/radioButtonFrench"
+            android:id="@+id/radioButtonDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vietnamese" />
+            android:text="Dark" />
 
-        <RadioButton
-            android:id="@+id/radioButtonSpanish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Japanese" />
 
-        <!-- Add more language options as needed -->
 
     </RadioGroup>
 
