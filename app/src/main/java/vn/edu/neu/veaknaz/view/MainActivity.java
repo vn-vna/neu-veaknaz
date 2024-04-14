@@ -74,15 +74,12 @@ public class MainActivity extends AppCompatActivity {
               (tab, position) -> {
                 switch (position) {
                   case 0:
-                    tab.setIcon(R.drawable.ic_bottom_navigation_home);
-                    break;
-                  case 1:
                     tab.setIcon(R.drawable.ic_bottom_navigation_chat);
                     break;
-                  case 2:
+                  case 1:
                     tab.setIcon(R.drawable.ic_bottom_navigation_notification);
                     break;
-                  case 3:
+                  case 2:
                     tab.setIcon(R.drawable.ic_bottom_navigation_user);
                     break;
                 }
@@ -91,10 +88,9 @@ public class MainActivity extends AppCompatActivity {
           tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             void setAppTitle(TabLayout.Tab tab) {
               int titleId = switch (tab.getPosition()) {
-                case 0 -> R.string.activity_main_title_home;
-                case 1 -> R.string.activity_main_title_groups;
-                case 2 -> R.string.activity_main_title_messages;
-                case 3 -> R.string.activity_main_title_usercenter;
+                case 0 -> R.string.activity_main_title_groups;
+                case 1 -> R.string.activity_main_title_messages;
+                case 2 -> R.string.activity_main_title_usercenter;
                 default -> 0;
               };
               MainActivity.this.<TextView>findViewById(R.id.activity_main_title).setText(titleId);
@@ -153,17 +149,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public Fragment createFragment(int position) {
       return switch (position) {
-        case 0 -> new HomeFragment();
-        case 1 -> new GroupCenterFragment();
-        case 2 -> new NotificationFragment();
-        case 3 -> new UserCenterFragment();
+        case 0 -> new GroupCenterFragment();
+        case 1 -> new NotificationFragment();
+        case 2 -> new UserCenterFragment();
         default -> throw new IllegalArgumentException("Invalid position: " + position);
       };
     }
 
     @Override
     public int getItemCount() {
-      return 4;
+      return 3;
     }
   }
 
