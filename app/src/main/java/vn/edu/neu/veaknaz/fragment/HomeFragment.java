@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
     Optional.ofNullable(requireActivity().<NavigationView>findViewById(R.id.nav_view))
         .ifPresent(navView -> {
           navView.getMenu().clear();
-          navView.inflateMenu(R.menu.activity_main_menu_fragment_home);
+          navView.inflateMenu(R.menu.activity_main_menu_fragment_usercenter);
         });
   }
 

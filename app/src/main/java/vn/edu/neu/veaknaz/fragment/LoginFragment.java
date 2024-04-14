@@ -13,6 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.navigation.NavigationView;
+
+import java.util.Optional;
+
 import vn.edu.neu.veaknaz.R;
 import vn.edu.neu.veaknaz.client.AntAuthenticationClient;
 import vn.edu.neu.veaknaz.view.MainActivity;
@@ -45,6 +49,8 @@ public class LoginFragment extends Fragment {
           AntAuthenticationClient.getInstance().login(username, password, new OnLoginListener());
         });
   }
+
+
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,

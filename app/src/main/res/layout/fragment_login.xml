@@ -78,7 +78,7 @@
                     android:layout_height="40dp"
                     android:id="@+id/fragment_login_button_go_to_signup"
                     android:backgroundTint="@color/background"
-                    android:textColor="@color/accent"
+                    android:textColor="@color/alternative_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_login_button_login" />

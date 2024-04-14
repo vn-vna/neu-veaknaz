@@ -29,4 +29,5 @@
     <string name="activity_main_menu_group">グループ</string>
     <string name="activity_main_menu_notification">通知</string>
     <string name="activity_main_menu_usercenter">ユーザーセンター</string>
+    <string name="activity_main_menu_edit_user">Edit User</string>
 </resources>

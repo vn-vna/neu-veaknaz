@@ -13,9 +13,6 @@
     </group>
 
     <item
-            android:title="@string/activity_main_menu_add_group"
-            android:id="@+id/activity_main_menu_item_add_group" />
-    <item
             android:title="@string/activity_main_menu_change_language"
             android:id="@+id/activity_main_menu_item_change_language" />
 </menu>
