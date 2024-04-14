@@ -40,7 +40,24 @@
                             android:layout_marginStart="16dp"
                             app:layout_constraintStart_toEndOf="@+id/activity_chat_button_back"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent" />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/activity_chat_button_add_member"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            android:textStyle="bold" />
+
+                    <ImageButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:srcCompat="@drawable/ic_plus"
+                            android:id="@+id/activity_chat_button_add_member"
+                            app:tint="@color/primary"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:background="?android:attr/selectableItemBackground"
+                            app:layout_constraintVertical_bias="0.0"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="8dp" />
 
                     <ImageButton
                             android:layout_width="60dp"
@@ -51,7 +68,9 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:background="?android:attr/selectableItemBackground" />
+                            android:background="?android:attr/selectableItemBackground"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintVertical_bias="0.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

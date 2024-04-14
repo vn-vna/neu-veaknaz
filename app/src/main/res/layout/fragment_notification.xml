@@ -5,4 +5,13 @@
         android:layout_height="match_parent"
         tools:context=".fragment.NotificationFragment">
 
+    <include
+            android:visibility="gone"
+            layout="@layout/shimmer_notification_loading" />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/notification_center_recycler_view" />
 </FrameLayout>

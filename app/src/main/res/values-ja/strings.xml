@@ -29,5 +29,6 @@
     <string name="activity_main_menu_group">グループ</string>
     <string name="activity_main_menu_notification">通知</string>
     <string name="activity_main_menu_usercenter">ユーザーセンター</string>
-    <string name="activity_main_menu_edit_user">Edit User</string>
+    <string name="activity_main_menu_edit_user">ユーザー情報の編集</string>
+    <string name="activity_main_menu_add_member">メンバーを追加</string>
 </resources>

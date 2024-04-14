@@ -32,5 +32,6 @@
     <string name="activity_main_menu_notification">Notifications</string>
     <string name="activity_main_menu_usercenter">User Center</string>
     <string name="activity_main_menu_edit_user">Edit User</string>
+    <string name="activity_main_menu_add_member">Add Member</string>
 
 </resources>

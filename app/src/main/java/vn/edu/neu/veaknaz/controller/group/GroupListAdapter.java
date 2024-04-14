@@ -48,6 +48,7 @@ public  class GroupListAdapter extends RecyclerView.Adapter<GroupListViewHolder>
       var intent = new Intent(context, ChatActivity.class);
       var bundle = new Bundle();
       bundle.putString("gid", groupItem.getGroupId());
+      bundle.putString("groupName", groupItem.getGroupName());
       intent.putExtras(bundle);
       context.startActivity(intent);
     });
